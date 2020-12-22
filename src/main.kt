@@ -16,5 +16,6 @@ fun main() {
     println(add("1\n2,3"))
     println(add(";[\n1;2[3,4"))
     println(add(";[\n10;20[30,40"))
+    println(add(";[|?\n10;20[30,40|50?60"))
     println(add(";[\n10;20[-30,-40"))
 }

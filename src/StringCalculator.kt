@@ -1,8 +1,14 @@
 fun add(numbers: String): Int {
-    val sub02 = numbers.substring(0, 2)
-    val splitString = if (sub02.none { it in "0123456789" } && numbers[2] == '\n')
-        numbers.substring(2).split(*((sub02.toList() + listOf(',', '\n')).toCharArray()))
-    else numbers.split(',', '\n')
+    val firstNewLineIndex = numbers.indexOfFirst { it == '\n' }
+    val previousNewLineIndex = firstNewLineIndex - 1
+    val isCustomDelimiter =
+        firstNewLineIndex != -1 && previousNewLineIndex >= 0 && (numbers[previousNewLineIndex] !in "0123456789")
+    val splitString = if (isCustomDelimiter) {
+        val sub = numbers.substring(0, firstNewLineIndex)
+        numbers.substring(firstNewLineIndex).split(*((sub.toList() + listOf(',', '\n')).toCharArray()))
+    } else {
+        numbers.split(',', '\n')
+    }
     val intList = splitString.mapNotNull { it.toIntOrNull() }
     val negativeList = intList.filter { it < 0 }
     if (negativeList.isNotEmpty()) {
